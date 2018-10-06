@@ -5,7 +5,7 @@ export class App {
     config.title = 'Contactos';
     config.map([
       { route: '',              moduleId: PLATFORM.moduleName('no-selection'),   title: 'Selección' },
-      { route: 'contacts/:id',  moduleId: PLATFORM.moduleName('contact-detail'), name:'contactos' }
+      { route: 'contacts/:id',  moduleId: PLATFORM.moduleName('contact-detail'), name:'contacts' }
     ]);
 
     this.router = router;
