@@ -1,59 +1,28 @@
+import {HttpClient} from 'aurelia-fetch-client';
+
+let httpClient = new HttpClient();
+
+let contacts = [];
+
+httpClient.fetch('https://jsonplaceholder.typicode.com/users')
+.then(response => response.json())
+.then(data => {
+  contacts = data;
+});
+
 let latency = 200;
-let id = 0;
-
-function getId(){
-  return ++id;
-}
-
-let contacts = [
-  {
-    id:getId(),
-    firstName:'John',
-    lastName:'Tolkien',
-    email:'tolkien@inklings.com',
-    phoneNumber:'867-5309'
-  },
-  {
-    id:getId(),
-    firstName:'Clive',
-    lastName:'Lewis',
-    email:'lewis@inklings.com',
-    phoneNumber:'867-5309'
-  },
-  {
-    id:getId(),
-    firstName:'Owen',
-    lastName:'Barfield',
-    email:'barfield@inklings.com',
-    phoneNumber:'867-5309'
-  },
-  {
-    id:getId(),
-    firstName:'Charles',
-    lastName:'Williams',
-    email:'williams@inklings.com',
-    phoneNumber:'867-5309'
-  },
-  {
-    id:getId(),
-    firstName:'Roger',
-    lastName:'Green',
-    email:'green@inklings.com',
-    phoneNumber:'867-5309'
-  }
-];
 
 export class WebAPI {
   isRequesting = false;
-  
+
   getContactList(){
     this.isRequesting = true;
     return new Promise(resolve => {
       setTimeout(() => {
         let results = contacts.map(x =>  { return {
           id:x.id,
-          firstName:x.firstName,
-          lastName:x.lastName,
+          firstName:x.name,
+          lastName:x.username,
           email:x.email
         }});
         resolve(results);

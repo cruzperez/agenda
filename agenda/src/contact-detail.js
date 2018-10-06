@@ -13,26 +13,29 @@ export class ContactDetail {
 
     return this.api.getContactDetails(params.id).then(contact => {
       this.contact = contact;
-      this.routeConfig.navModel.setTitle(contact.firstName);
+      this.routeConfig.navModel.setTitle(contact.name);
       this.originalContact = JSON.parse(JSON.stringify(contact));
     });
   }
 
   get canSave() {
-    return this.contact.firstName && this.contact.lastName && !this.api.isRequesting;
+    return this.contact.name && this.contact.username && !this.api.isRequesting;
   }
-  
+
   save() {
     this.api.saveContact(this.contact).then(contact => {
       this.contact = contact;
-      this.routeConfig.navModel.setTitle(contact.firstName);
+      this.routeConfig.navModel.setTitle(contact.name);
       this.originalContact = JSON.parse(JSON.stringify(contact));
     });
   }
 
   canDeactivate() {
-    if (!areEqual(this.originalContact, this.contact)){
-      return confirm('You have unsaved changes. Are you sure you wish to leave?');
+    if (String(this.originalContact.name) != String(this.contact.name) ||
+        String(this.originalContact.username) != String(this.contact.username) ||
+        String(this.originalContact.email) != String(this.contact.email) ||
+        String(this.originalContact.phone) != String(this.contact.phone)){
+      return confirm('Tiene cambios sin guardar. ¿Está seguro que desea salir?');
     }
 
     return true;
